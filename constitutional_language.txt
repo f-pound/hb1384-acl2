@@ -6,19 +6,48 @@ FRANCHISE AND OFFICERS
 
 Section 6. Apportionment.
 
-Members of the House of Representatives of the United States and members of the Senate and of the House of Delegates of the General Assembly shall be elected from electoral districts established pursuant to this section and Section 6-A of this Constitution. Every electoral district shall be composed of contiguous and compact territory and shall be so constituted as to give, as nearly as is practicable, representation in proportion to the population of the district.
+Members of the House of Representatives of the United States and members of the
+Senate and of the House of Delegates of the General Assembly shall be elected
+from electoral districts established pursuant to this section and Section 6-A
+of this Constitution. Every electoral district shall be composed of contiguous
+and compact territory and shall be so constituted as to give, as nearly as is
+practicable, representation in proportion to the population of the district.
 
-Every electoral district shall be drawn in accordance with the requirements of federal and state laws that address racial and ethnic fairness, including the Equal Protection Clause of the Fourteenth Amendment to the Constitution of the United States and provisions of the Voting Rights Act of 1965, as amended, and judicial decisions interpreting such laws.
+Every electoral district shall be drawn in accordance with the requirements of
+federal and state laws that address racial and ethnic fairness, including the
+Equal Protection Clause of the Fourteenth Amendment to the Constitution of the
+United States and provisions of the Voting Rights Act of 1965, as amended, and
+judicial decisions interpreting such laws.
 
 Districts shall provide, where practicable, opportunities for racial and ethnic communities to elect candidates of their choice.
 
-The Commonwealth shall be reapportioned into electoral districts in accordance with this section and Section 6-A in the year 2021 and every ten years thereafter, except that the General Assembly shall be authorized to modify one or more congressional districts at any point following the adoption of a decennial reapportionment law, but prior to the next decennial census, in the event that any State of the United States of America conducts a redistricting of such state's congressional districts at any point following that state's adoption of a decennial reapportionment law for any purpose other than (i) the completion of the state's decennial redistricting in response to a federal census and reapportionment mandated by the Constitution of the United States and established in federal law or (ii) as ordered by any state or federal court to remedy an unlawful or unconstitutional district map.
+The Commonwealth shall be reapportioned into electoral districts in accordance
+with this section and Section 6-A in the year 2021 and every ten years
+thereafter, except that the General Assembly shall be authorized to modify one
+or more congressional districts at any point following the adoption of a
+decennial reapportionment law, but prior to the next decennial census, in the
+event that any State of the United States of America conducts a redistricting
+of such state's congressional districts at any point following that state's
+adoption of a decennial reapportionment law for any purpose other than
+(i) the completion of the state's decennial redistricting in response to a
+federal census and reapportionment mandated by the Constitution of the United
+States and established in federal law or (ii) as ordered by any state or federal
+court to remedy an unlawful or unconstitutional district map.
 
-Any such decennial reapportionment law, or reapportionment law modifying one or more congressional districts, shall take effect immediately and not be subject to the limitations contained in Article IV, Section 13, of this Constitution.
+Any such decennial reapportionment law, or reapportionment law modifying one or
+more congressional districts, shall take effect immediately and not be subject
+to the limitations contained in Article IV, Section 13, of this Constitution.
 
-The districts delineated in the decennial any reapportionment law shall be implemented for the November general election for the United States House of Representatives, Senate, or House of Delegates, respectively, that is held immediately prior to the expiration of the term being served in the year that the reapportionment law is required to be enacted.
+The districts delineated in the decennial any reapportionment law shall be
+implemented for the November general election for the United States House of
+Representatives, Senate, or House of Delegates, respectively, that is held
+immediately prior to the expiration of the term being served in the year that
+the reapportionment law is required to be enacted.
 
-A member in office at the time that a decennial redistricting law is enacted shall complete his term of office and shall continue to represent the district from which he was elected for the duration of such term of office so long as he does not move his residence from the district from which he was elected.
+A member in office at the time that a decennial redistricting law is enacted
+shall complete his term of office and shall continue to represent the district
+from which he was elected for the duration of such term of office so long as
+he does not move his residence from the district from which he was elected.
 
 Any vacancy occurring during such term shall be filled from the same district that elected the member whose vacancy is being filled.
 
@@ -26,7 +55,14 @@ SCHEDULE
 
 Section 6. Application and duration of certain redistricting amendments.
 
-The authorization in Article II, Section 6 authorizing the General Assembly to modify one or more congressional districts at any point following adoption of a decennial reapportionment law in the event that any State of the United States of America conducts a redistricting of such state's congressional districts at any point following that state's adoption of a decennial reapportionment law shall be limited to making such modifications between January 1, 2025, and October 31, 2030, in response to actions taken by another state between January 1, 2025, and October 31, 2030.
+The authorization in Article II, Section 6 authorizing the General Assembly to
+modify one or more congressional districts at any point following adoption of a
+decennial reapportionment law in the event that any State of the United States
+of America conducts a redistricting of such state's congressional districts at
+any point following that state's adoption of a decennial reapportionment law
+shall be limited to making such modifications between January 1, 2025, and
+October 31, 2030, in response to actions taken by another state between
+January 1, 2025, and October 31, 2030.
 
 
 ---
