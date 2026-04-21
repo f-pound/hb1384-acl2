@@ -78,7 +78,7 @@ Rules: ((:EXECUTABLE-COUNTERPART LEGAL-REFERRAL-P)
         (:TYPE-PRESCRIPTION LEGAL-REFERRAL-P))
 Warnings:  Subsume and Non-rec
 Time:  0.00 seconds (prove: 0.00, print: 0.00, other: 0.00)
-Prover steps counted:  15
+Prover steps counted:  19
  HB1384-LEGAL-UNDER-COMMONWEALTH-MODEL
 ```
 
@@ -91,7 +91,7 @@ Rules: ((:EXECUTABLE-COUNTERPART ILLEGAL-REFERRAL-P)
         (:TYPE-PRESCRIPTION ILLEGAL-REFERRAL-P))
 Warnings:  Non-rec
 Time:  0.00 seconds (prove: 0.00, print: 0.00, other: 0.00)
-Prover steps counted:  15
+Prover steps counted:  19
  HB1384-ILLEGAL-UNDER-CHALLENGER-MODEL
 ```
 
