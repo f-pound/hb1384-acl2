@@ -1,0 +1,53 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "docker: pull acl2 image",
+            "type": "shell",
+            "command": "docker pull atwalter/acl2",
+            "problemMatcher": []
+        },
+        {
+            "label": "docker: start acl2 shell",
+            "type": "shell",
+            "command": "docker compose run --rm acl2",
+            "problemMatcher": []
+        },
+        {
+            "label": "acl2: run challenger model",
+            "type": "shell",
+            "command": "docker compose run --rm acl2 bash -lc 'acl2 < /work/hb1384_challenger_model.lisp | tee /work/hb1384_challenger_model.log'",
+            "problemMatcher": []
+        },
+        {
+            "label": "acl2: run commonwealth model",
+            "type": "shell",
+            "command": "docker compose run --rm acl2 bash -lc 'acl2 < /work/hb1384_commonwealth_model.lisp | tee /work/hb1384_commonwealth_model.log'",
+            "problemMatcher": []
+        },
+        {
+            "label": "acl2: certify challenger model",
+            "type": "shell",
+            "command": "docker compose run --rm acl2 bash -lc 'cert.pl /work/hb1384_challenger_model'",
+            "problemMatcher": []
+        },
+        {
+            "label": "acl2: certify commonwealth model",
+            "type": "shell",
+            "command": "docker compose run --rm acl2 bash -lc 'cert.pl /work/hb1384_commonwealth_model'",
+            "problemMatcher": []
+        },
+        {
+            "label": "acl2: tail challenger log",
+            "type": "shell",
+            "command": "bash -lc 'tail -n 80 hb1384_challenger_model.log'",
+            "problemMatcher": []
+        },
+        {
+            "label": "acl2: tail commonwealth log",
+            "type": "shell",
+            "command": "bash -lc 'tail -n 80 hb1384_commonwealth_model.log'",
+            "problemMatcher": []
+        }
+    ]
+}
