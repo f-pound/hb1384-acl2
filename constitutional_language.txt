@@ -32,6 +32,7 @@ The authorization in Article II, Section 6 authorizing the General Assembly to m
 ---
 
 **References:**
-- Virginia Legislative Information System (LIS) HB 1384 Full Text: https://lis.virginia.gov/cgi-bin/legp604.exe?261+ful+HB1384
-- Virginia Legislative Information System (LIS) HB 1384 Summary: https://lis.virginia.gov/cgi-bin/legp604.exe?261+sum+HB1384
-- Ballotpedia Page on the Amendment: https://ballotpedia.org/Virginia_House_Bill_1384
+- Virginia Legislative Information System (LIS) HB 1384: https://lis.virginia.gov/bill-details/20261/HB1384
+- Ballotpedia Page on the Amendment: https://ballotpedia.org/Virginia_Use_of_Legislative_Congressional_Redistricting_Map_Amendment_(2026)
+- Original Section Constitution of Virginia: https://law.lis.virginia.gov/constitution/article2/section6/
+

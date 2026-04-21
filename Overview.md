@@ -6,11 +6,9 @@ To proceed with this effort I made some assumptions:
 
 To those ends I have included the 2026 Session, Virginia Acts of Assembly -- Chapter as well as the proposed constitutional law changes to the Virginia constitution.
 
-- Virginia Legislative Information System (LIS) HB 1384 Full Text: https://lis.virginia.gov/cgi-bin/legp604.exe?261+ful+HB1384
+- Virginia Legislative Information System (LIS) HB 1384: https://lis.virginia.gov/bill-details/20261/HB1384
 
-- Virginia Legislative Information System (LIS) HB 1384 Summary: https://lis.virginia.gov/cgi-bin/legp604.exe?261+sum+HB1384
-
-- Ballotpedia Page on the Amendment: https://ballotpedia.org/Virginia_House_Bill_1384
+- Ballotpedia Page on the Amendment: https://ballotpedia.org/Virginia_Use_of_Legislative_Congressional_Redistricting_Map_Amendment_(2026)
 
 2. I wanted to assume that the goals of the proposed legislation were logically unvarnished in that it was attempting to correct a flaw or address a surge in population that warranted an out of cycle redistricting.
 
