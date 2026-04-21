@@ -166,11 +166,14 @@
 ;;   modifies-article-ii-p - boolean
 ;;   modifies-schedule-p   - boolean
 ;; Output:
-;;   Returns NIL. Challenger doctrine: Mandatory Richmond-only venue is a substantive,
-;;   independent object and is not germane to the core constitutional amendment referral.
+;;   Returns NIL when both structural changes are present, because the act already
+;;   combines multiple objects and venue centralization adds yet another independent
+;;   object to an already problematic package.
+;;   Challenger doctrine: Mandatory Richmond-only venue is a substantive, independent
+;;   object that is not germane to the core constitutional amendment referral,
+;;   especially when the act already combines Article II and Schedule modifications.
 (defun venue-centralization-permitted-p (modifies-article-ii-p modifies-schedule-p)
-  (declare (ignore modifies-article-ii-p modifies-schedule-p))
-  nil)
+  (not (and modifies-article-ii-p modifies-schedule-p)))
 
 ;; transfer-pending-cases-permitted-p
 ;; Purpose:
