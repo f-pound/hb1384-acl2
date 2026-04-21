@@ -133,6 +133,29 @@
 (defun material-trigger-condition-p (contains-temporal-window-p contains-trigger-condition-p)
   (or contains-temporal-window-p contains-trigger-condition-p))
 
+;; venue-centralization-permitted-p
+;; Purpose:
+;;   Determine whether mandatory venue centralization is constitutionally permitted.
+;; Inputs:
+;;   modifies-article-ii-p - boolean
+;;   modifies-schedule-p   - boolean
+;; Output:
+;;   Returns NIL. Challenger doctrine: Mandatory Richmond-only venue is a substantive,
+;;   independent object and is not germane to the core constitutional amendment referral.
+(defun venue-centralization-permitted-p (modifies-article-ii-p modifies-schedule-p)
+  (declare (ignore modifies-article-ii-p modifies-schedule-p))
+  nil)
+
+;; transfer-pending-cases-permitted-p
+;; Purpose:
+;;   Determine whether forced transfer of pending cases is constitutionally permitted
+;;   in this context.
+;; Output:
+;;   Returns NIL. Challenger doctrine: Forced transfer of pending suits is an
+;;   independent structural defect and procedurally problematic.
+(defun transfer-pending-cases-permitted-p ()
+  nil)
+
 ;; --- Core Structure & Facts ---
 (ld "hb1384_core.lisp")
 (ld "hb1384_facts.lisp")
@@ -162,4 +185,6 @@
    *amendment-contains-temporal-window-p*
    *amendment-contains-trigger-condition-p*
    *ballot-mentions-temporal-window-p*
-   *ballot-mentions-trigger-condition-p*))
+   *ballot-mentions-trigger-condition-p*
+   *richmond-exclusive-venue-p*
+   *venue-provision-transfers-pending-cases-p*))

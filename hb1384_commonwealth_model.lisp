@@ -134,6 +134,31 @@
   (declare (ignore contains-temporal-window-p contains-trigger-condition-p))
   nil)
 
+;; venue-centralization-permitted-p
+;; Purpose:
+;;   Determine whether mandatory venue centralization is constitutionally permitted.
+;; Inputs:
+;;   modifies-article-ii-p - boolean
+;;   modifies-schedule-p   - boolean
+;; Output:
+;;   Returns T. Commonwealth doctrine: Venue centralization is germane to the administration
+;;   of amendment-related litigation. The General Assembly may channel related disputes
+;;   into one forum for consistency.
+(defun venue-centralization-permitted-p (modifies-article-ii-p modifies-schedule-p)
+  (declare (ignore modifies-article-ii-p modifies-schedule-p))
+  t)
+
+;; transfer-pending-cases-permitted-p
+;; Purpose:
+;;   Determine whether forced transfer of pending cases is constitutionally permitted
+;;   in this context.
+;; Output:
+;;   Returns T. Commonwealth doctrine: The General Assembly holds broad authority
+;;   to prescribe venue and procedures, including the transfer of pending cases,
+;;   without violating the constitution.
+(defun transfer-pending-cases-permitted-p ()
+  t)
+
 ;; --- Core Structure & Facts ---
 (ld "hb1384_core.lisp")
 (ld "hb1384_facts.lisp")
@@ -163,4 +188,6 @@
    *amendment-contains-temporal-window-p*
    *amendment-contains-trigger-condition-p*
    *ballot-mentions-temporal-window-p*
-   *ballot-mentions-trigger-condition-p*))
+   *ballot-mentions-trigger-condition-p*
+   *richmond-exclusive-venue-p*
+   *venue-provision-transfers-pending-cases-p*))

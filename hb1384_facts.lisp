@@ -28,3 +28,7 @@
 ;; --- Ballot Language Properties (Pure Facts) ---
 (defconst *ballot-mentions-temporal-window-p* nil)
 (defconst *ballot-mentions-trigger-condition-p* nil)
+
+;; --- Venue Provision (Pure Facts) ---
+(defconst *richmond-exclusive-venue-p* t)
+(defconst *venue-provision-transfers-pending-cases-p* t)
