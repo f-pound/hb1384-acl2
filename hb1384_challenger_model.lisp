@@ -133,6 +133,30 @@
 (defun material-trigger-condition-p (contains-temporal-window-p contains-trigger-condition-p)
   (or contains-temporal-window-p contains-trigger-condition-p))
 
+;; void-challenge-survivable-p
+;; Purpose:
+;;   Determine whether the first passage survives a judicial void challenge
+;;   under the Challenger's theory.
+;; Output:
+;;   Returns NIL. Challenger doctrine: The circuit court's finding that first
+;;   passage was void ab initio is legally dispositive. A fundamentally defective
+;;   first passage cannot be rescued and the amendment never validly entered
+;;   the Article XII pipeline.
+(defun void-challenge-survivable-p ()
+  nil)
+
+;; second-passage-validp
+;; Purpose:
+;;   Determine whether the second passage of the amendment occurred after the
+;;   intervening House election under the Challenger's theory.
+;; Inputs:
+;;   second-passage-date      - integer day number for the amendment's second passage.
+;;   election-occurrence-date - integer day number chosen by election-occurrence-date.
+;; Output:
+;;   Returns T if second passage occurred after the election; otherwise NIL.
+(defun second-passage-validp (second-passage-date election-occurrence-date)
+  (< election-occurrence-date second-passage-date))
+
 ;; venue-centralization-permitted-p
 ;; Purpose:
 ;;   Determine whether mandatory venue centralization is constitutionally permitted.
@@ -187,4 +211,6 @@
    *ballot-mentions-temporal-window-p*
    *ballot-mentions-trigger-condition-p*
    *richmond-exclusive-venue-p*
-   *venue-provision-transfers-pending-cases-p*))
+   *venue-provision-transfers-pending-cases-p*
+   *second-passage-date*
+   *first-passage-challenged-as-void-p*))

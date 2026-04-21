@@ -28,6 +28,16 @@
        (implies venue-provision-transfers-pending-cases-p
                 transfer-pending-cases-permitted-p)))
 
+;; --- First Passage Core Logic (P1) ---
+;; Both sides agree on this structural rule:
+;; If first passage has been judicially challenged as void, it survives
+;; only if the applicable legal doctrine treats that challenge as survivable.
+(defun first-passage-ok-p
+  (first-passage-challenged-as-void-p
+   void-challenge-survivable-p)
+  (implies first-passage-challenged-as-void-p
+           void-challenge-survivable-p))
+
 ;; --- Main Legality Predicate ---
 
 (defun legal-referral-p
@@ -46,14 +56,19 @@
    ballot-discloses-temporal-limit-p
    ballot-discloses-trigger-condition-p
    richmond-exclusive-venue-p
-   venue-provision-transfers-pending-cases-p)
+   venue-provision-transfers-pending-cases-p
+   second-passage-date
+   first-passage-challenged-as-void-p)
   (let* ((intervening-occurrence (election-occurrence-date intervening-early-voting-start-date intervening-election-day))
          (sub-date (submission-date referendum-early-voting-start-date referendum-election-day))
          (material-temporal-p (material-temporal-limit-p contains-temporal-window-p contains-trigger-condition-p))
          (material-trigger-p (material-trigger-condition-p contains-temporal-window-p contains-trigger-condition-p))
          (centralization-permitted-p (venue-centralization-permitted-p modifies-article-ii-p modifies-schedule-p))
-         (transfer-permitted-p (transfer-pending-cases-permitted-p)))
-    (and (next-election-ok-p first-passage-date intervening-occurrence intervening-election-type)
+         (transfer-permitted-p (transfer-pending-cases-permitted-p))
+         (void-survivable-p (void-challenge-survivable-p)))
+    (and (first-passage-ok-p first-passage-challenged-as-void-p void-survivable-p)
+         (next-election-ok-p first-passage-date intervening-occurrence intervening-election-type)
+         (second-passage-validp second-passage-date intervening-occurrence)
          (ninety-day-rule-ok-p final-passage-date sub-date)
          (notice-ok-p published-30-13-p)
          (single-object-ok-p modifies-article-ii-p modifies-schedule-p)
@@ -84,7 +99,9 @@
    ballot-discloses-temporal-limit-p
    ballot-discloses-trigger-condition-p
    richmond-exclusive-venue-p
-   venue-provision-transfers-pending-cases-p)
+   venue-provision-transfers-pending-cases-p
+   second-passage-date
+   first-passage-challenged-as-void-p)
   (not (legal-referral-p
         first-passage-date
         intervening-early-voting-start-date
@@ -101,4 +118,6 @@
         ballot-discloses-temporal-limit-p
         ballot-discloses-trigger-condition-p
         richmond-exclusive-venue-p
-        venue-provision-transfers-pending-cases-p)))
+        venue-provision-transfers-pending-cases-p
+        second-passage-date
+        first-passage-challenged-as-void-p)))

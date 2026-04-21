@@ -13,6 +13,9 @@
 (defconst *referendum-early-voting-start-date* 430) ; 80 days after final passage
 (defconst *referendum-election-day* 475)            ; 125 days after final passage
 
+;; --- First Passage Judicial Status ---
+(defconst *first-passage-challenged-as-void-p* t)
+
 ;; --- Election Types ---
 (defconst *intervening-election-type* 'general)
 
