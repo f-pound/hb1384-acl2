@@ -213,8 +213,8 @@
    *amendment-modifies-schedule-p*
    *amendment-contains-temporal-window-p*
    *amendment-contains-trigger-condition-p*
-   *ballot-mentions-temporal-window-p*
-   *ballot-mentions-trigger-condition-p*
+   *ballot-discloses-temporal-limit-p*
+   *ballot-discloses-trigger-condition-p*
    *richmond-exclusive-venue-p*
    *venue-provision-transfers-pending-cases-p*
    *second-passage-date*

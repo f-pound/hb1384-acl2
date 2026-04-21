@@ -41,8 +41,11 @@
 (defconst *amendment-contains-trigger-condition-p* t)
 
 ;; --- Ballot Language Properties (Pure Facts) ---
-(defconst *ballot-mentions-temporal-window-p* nil)
-(defconst *ballot-mentions-trigger-condition-p* nil)
+;; Whether the ballot text actually discloses the temporal window and
+;; trigger condition to voters.  Both are nil because the ballot
+;; language omitted these details.
+(defconst *ballot-discloses-temporal-limit-p* nil)
+(defconst *ballot-discloses-trigger-condition-p* nil)
 
 ;; --- Venue Provision (Pure Facts) ---
 (defconst *richmond-exclusive-venue-p* t)
