@@ -7,19 +7,26 @@
 (in-package "ACL2")
 
 ;; --- Submission Clause Core Logic ---
-;; Both sides agree on this structural rule for the submission clause
+;; Derived from the amendment's Schedule Section 6 temporal window.
+;; Both sides agree on this structural rule for the submission clause:
+;; if a feature is material, then the ballot must disclose it.
+;; Parameter names deliberately avoid the "-p" suffix used by the
+;; interpretive functions that compute these values, preventing
+;; accidental name-shadowing.
 (defun submission-clause-ok-p
-  (material-temporal-limit-p
-   material-trigger-condition-p
-   ballot-discloses-temporal-limit-p
-   ballot-discloses-trigger-condition-p)
-  (and (implies material-temporal-limit-p
-                ballot-discloses-temporal-limit-p)
-       (implies material-trigger-condition-p
-                ballot-discloses-trigger-condition-p)))
+  (material-temporal-flag
+   material-trigger-flag
+   ballot-temporal-discloses?
+   ballot-trigger-discloses?)
+  (and (implies material-temporal-flag
+               ballot-temporal-discloses?)
+       (implies material-trigger-flag
+                ballot-trigger-discloses?)))
 
 ;; --- Venue Provision Core Logic ---
-;; Both sides agree on this structural rule for venue validity
+;; Both sides agree on this structural rule for venue validity:
+;; if the act centralises venue or transfers pending cases, the
+;; corresponding permission predicate must hold.
 (defun venue-ok-p
   (richmond-exclusive-venue-p
    venue-provision-transfers-pending-cases-p
