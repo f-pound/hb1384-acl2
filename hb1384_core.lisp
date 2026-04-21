@@ -1,6 +1,8 @@
 ; hb1384_core.lisp
 ; Core structure for proving legality of HB1384
 ; This file assumes that interpretive functions and facts have already been defined.
+; All date constants below are encoded as ordinal day counts
+; measured from 2024-01-01 = day 0.
 
 (in-package "ACL2")
 

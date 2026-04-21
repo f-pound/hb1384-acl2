@@ -1,5 +1,7 @@
 ; hb1384_commonwealth_model.lisp
 ; ACL2 book-style file for the commonwealth model.
+; All date constants below are encoded as ordinal day counts
+; measured from 2024-01-01 = day 0.
 
 (in-package "ACL2")
 

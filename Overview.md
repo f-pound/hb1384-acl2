@@ -39,6 +39,8 @@ If any of the terms are not met it's illegal, in human terms.
 
 The predicates were then turned into ACL2 functions:
 
+> **Date encoding:** All date constants in the ACL2 files are encoded as ordinal day counts measured from 2024-01-01 = day 0. This preserves both chronological ordering and correct day-difference arithmetic (needed for the 90-day rule).
+
 | Pn | Legal idea | ACL2 implementation |
 | --- | --- | --- |
 | **P1** | first passage valid | `first-passage-validp` |
