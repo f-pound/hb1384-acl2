@@ -1,6 +1,6 @@
 This was my effort to apply a formal methods model checker to legislation. What better way to dive in than to pick a current issue up for a vote in Virginia, namely HB1384.
 
-The proceed with this effort I made some assumptions:
+To proceed with this effort I made some assumptions:
 
 1. The proposed laws and procedures including modifications to the constitution must be sourced from authentic authoritative sources.
 
@@ -28,13 +28,13 @@ Now came the extraction of the black-letter law and the ones specific to HB 1384
 | **P6 = ballot submission text lawfully matched the amendment under Article XII** | The **Submission Clause** challenge: ballot language allegedly differed from the amendment passed by the General Assembly. | I created P6 because this is not just a timing or notice issue; it is a separate claim that the actual question submitted to voters was legally defective. The predicate asks whether the ballot question lawfully corresponds to the amendment text. | **Virginia Supreme Court order, p. 5, fourth bullet**: ballot language is allegedly misleading and violates Article XII because it “submits a different question on the referendum ballot than the language of the constitutional amendment passed by the General Assembly.” **HB 1384 enrolled act, pp. 2–3**: amendment text includes the trigger condition and 2025–2030 limitation; ballot question uses broader “restore fairness” wording and does not spell those out the same way. |
 | **P7 = HB 1384 satisfied Article IV, Section 12’s one-object/title rule** | The **Form of Laws Clause** in Article IV, Section 12, plus the litigation claim that HB 1384 combined multiple objects. | I created P7 because this is a distinct constitutional challenge to the act as a bill, not to the amendment text alone. The predicate asks whether HB 1384 passes the one-object/title test. | **Article IV, § 12**: “No law shall embrace more than one object, which shall be expressed in its title.” ([Virginia Law](https://law.lis.virginia.gov/constitution/article4/section12/)) **Virginia Supreme Court order, p. 6**: plaintiffs argued HB 1384 addressed multiple objects—appropriations, ballot procedures, repeal of § 30-13, and venue transfer—while only the first three were referenced in the title. **HB 1384 enrolled act, p. 1 title and pp. 3–4 enactments**: title covers appropriations, submission of amendment, and repeal of § 30-13; the act also adds venue-centralization language. |
 
-LEGAL = P1 ∧ P2 ∧ P3 ∧ P4 ∧ P5 ∧ P6 ∧ P7
+`LEGAL = P1 ∧ P2 ∧ P3 ∧ P4 ∧ P5 ∧ P6 ∧ P7`
 
-ILLEGAL = ¬LEGAL = ¬P1 ∨ ¬P2 ∨ ¬P3 ∨ ¬P4 ∨ ¬P5 ∨ ¬P6 ∨ ¬P7
+`ILLEGAL = ¬LEGAL = ¬P1 ∨ ¬P2 ∨ ¬P3 ∨ ¬P4 ∨ ¬P5 ∨ ¬P6 ∨ ¬P7`
 
 An action or state is **ILLEGAL** if **at least one** of the required conditions (P1 through P7) is **FALSE** (i.e., NOT P1 OR NOT P2 OR NOT P3, etc.).
 
-If any of the terms are not met its illegal, in human terms.
+If any of the terms are not met it's illegal, in human terms.
 
 The predicates were then turned into ACL2 functions:
 
@@ -48,14 +48,57 @@ The predicates were then turned into ACL2 functions:
 | **P6** | ballot submission text lawfully matched/disclosed the amendment under Article XII | `submission-clause-ok-p` |
 | **P7** | HB 1384 satisfied Article IV, Section 12 one-object/title rule | `single-object-ok-p` |
 
-`legal-referral-p` is the top-level ACL2 legality predicate.  
-It implements legality as the conjunction of seven conditions, where:  
-`first-passage-validp` = P1,  
-`next-election-ok-p` = P2,  
-`second-passage-validp` = P3,  
-`ninety-day-rule-ok-p` = P4,  
-`notice-ok-p` = P5,  
-`submission-clause-ok-p` = P6, and  
-`single-object-ok-p` = P7
+`legal-referral-p` is the top-level ACL2 legality predicate.
+It implements legality as the conjunction of seven conditions, where:
+- `first-passage-validp` = P1
+- `next-election-ok-p` = P2
+- `second-passage-validp` = P3
+- `ninety-day-rule-ok-p` = P4
+- `notice-ok-p` = P5
+- `submission-clause-ok-p` = P6, and
+- `single-object-ok-p` = P7
 
 The goal here was to provide some motivation to apply theorem proving using ACL to more legislative actions and really get to the root of the issues without having to rely on shallow and deceptive political signage and bloviating sociopaths.
+
+## ACL2 Theorem Proofs
+
+Here are the outputs from running the ACL2 books, demonstrating that both theorems are successfully proved under their respective fact models:
+
+### Commonwealth Model Proof
+
+```text
+Summary
+Form:  ( DEFTHM HB1384-LEGAL-UNDER-COMMONWEALTH-MODEL ...)
+Rules: ((:EXECUTABLE-COUNTERPART LEGAL-REFERRAL-P)
+        (:TYPE-PRESCRIPTION LEGAL-REFERRAL-P))
+Warnings:  Subsume and Non-rec
+Time:  0.00 seconds (prove: 0.00, print: 0.00, other: 0.00)
+Prover steps counted:  15
+ HB1384-LEGAL-UNDER-COMMONWEALTH-MODEL
+```
+
+### Challenger Model Proof
+
+```text
+Summary
+Form:  ( DEFTHM HB1384-ILLEGAL-UNDER-CHALLENGER-MODEL ...)
+Rules: ((:EXECUTABLE-COUNTERPART ILLEGAL-REFERRAL-P)
+        (:TYPE-PRESCRIPTION ILLEGAL-REFERRAL-P))
+Warnings:  Non-rec
+Time:  0.00 seconds (prove: 0.00, print: 0.00, other: 0.00)
+Prover steps counted:  15
+ HB1384-ILLEGAL-UNDER-CHALLENGER-MODEL
+```
+
+> **Important interpretive note:**
+> These ACL2 proofs show that each theorem is logically derivable from its own model; they do **not** show that the Commonwealth and Challenger models are equally strong as real-world legal arguments.
+>
+> In particular, the **Commonwealth model is a stretch in legality** because it reaches a lawful result only by adopting several favorable interpretive moves at once — for example, treating the relevant “next election” and “submission to the voters” dates in the most permissive way, treating notice defects as cured or non-fatal, treating omitted ballot qualifications as non-material, and treating the act’s multiple provisions as sufficiently germane to one object.
+>
+> By contrast, the **Challenger model** tracks a stricter, more plain-meaning reading of the procedural requirements and therefore reaches illegality with fewer rescue assumptions.
+>
+> So the proof outputs above should be read as:
+> - **ACL2 successfully proved legality under the Commonwealth’s favorable legal theory**, and
+> - **ACL2 successfully proved illegality under the Challenger’s stricter legal theory**.
+>
+> The difference between the outcomes comes from the competing legal interpretations, not from any disagreement about the underlying historical facts.
