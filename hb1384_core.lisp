@@ -1,6 +1,15 @@
 ; hb1384_core.lisp
-; Core structure for proving legality of HB1384
-; This file assumes that interpretive functions and facts have already been defined.
+; Core structural skeleton for proving legality / illegality of HB1384.
+;
+; This file defines the SHARED logical framework that both the Challenger
+; and the Commonwealth models agree on.  It uses 'implies'-based rules so
+; that the legal outcome is determined entirely by the interpretive
+; functions defined in each model file, not by any assumption hard-coded
+; here.
+;
+; Loaded by both model files via (ld "hb1384_core.lisp") AFTER the
+; model-specific interpretive functions have been defined.
+;
 ; All date constants below are encoded as ordinal day counts
 ; measured from 2024-01-01 = day 0.
 

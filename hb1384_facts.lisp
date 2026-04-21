@@ -1,5 +1,13 @@
 ; hb1384_facts.lisp
-; Centralized raw historical facts about HB1384
+; Centralized raw historical facts about HB1384.
+;
+; This file contains ONLY objective, undisputed facts — dates, structural
+; properties of the amendment text, and ballot-language observations.
+; Nothing in this file embodies a legal interpretation; that is the
+; exclusive responsibility of the model files (challenger / commonwealth).
+;
+; Loaded by both model files via (ld "hb1384_facts.lisp") so that both
+; interpretations operate on identical factual inputs.
 
 (in-package "ACL2")
 
