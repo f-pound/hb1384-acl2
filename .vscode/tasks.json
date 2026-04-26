@@ -4,7 +4,7 @@
         {
             "label": "docker: pull acl2 image",
             "type": "shell",
-            "command": "docker pull atwalter/acl2",
+            "command": "docker pull atwalter/acl2:latest",
             "problemMatcher": []
         },
         {
@@ -14,39 +14,68 @@
             "problemMatcher": []
         },
         {
-            "label": "acl2: run challenger model",
+            "label": "acl2: certify all books",
             "type": "shell",
-            "command": "docker compose run --rm acl2 bash -lc 'acl2 < /work/hb1384_challenger_model.lisp | tee /work/hb1384_challenger_model.log'",
+            "command": ".\\scripts\\certify_all.ps1",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "acl2: certify core (Layer 0)",
+            "type": "shell",
+            "command": "echo '(certify-book \"hb1384_core\" ?)' | docker run --rm -i -v \"${workspaceFolder}:/work\" -w /work atwalter/acl2:latest acl2",
             "problemMatcher": []
         },
         {
-            "label": "acl2: run commonwealth model",
+            "label": "acl2: certify process (Layer 0)",
             "type": "shell",
-            "command": "docker compose run --rm acl2 bash -lc 'acl2 < /work/hb1384_commonwealth_model.lisp | tee /work/hb1384_commonwealth_model.log'",
+            "command": "echo '(certify-book \"hb1384_process\" ?)' | docker run --rm -i -v \"${workspaceFolder}:/work\" -w /work atwalter/acl2:latest acl2",
             "problemMatcher": []
         },
         {
-            "label": "acl2: certify challenger model",
+            "label": "acl2: certify process_invariants (Layer 0)",
             "type": "shell",
-            "command": "docker compose run --rm acl2 bash -lc 'cert.pl /work/hb1384_challenger_model'",
+            "command": "echo '(certify-book \"hb1384_process_invariants\" ?)' | docker run --rm -i -v \"${workspaceFolder}:/work\" -w /work atwalter/acl2:latest acl2",
             "problemMatcher": []
         },
         {
-            "label": "acl2: certify commonwealth model",
+            "label": "acl2: certify consistency_check (Layer 0)",
             "type": "shell",
-            "command": "docker compose run --rm acl2 bash -lc 'cert.pl /work/hb1384_commonwealth_model'",
+            "command": "echo '(certify-book \"hb1384_consistency_check\" ?)' | docker run --rm -i -v \"${workspaceFolder}:/work\" -w /work atwalter/acl2:latest acl2",
             "problemMatcher": []
         },
         {
-            "label": "acl2: tail challenger log",
+            "label": "acl2: certify facts (Layer 1)",
             "type": "shell",
-            "command": "bash -lc 'tail -n 80 hb1384_challenger_model.log'",
+            "command": "echo '(certify-book \"hb1384_facts\" ? nil :defaxioms-okp t)' | docker run --rm -i -v \"${workspaceFolder}:/work\" -w /work atwalter/acl2:latest acl2",
             "problemMatcher": []
         },
         {
-            "label": "acl2: tail commonwealth log",
+            "label": "acl2: certify challenger_model (Layer 3)",
             "type": "shell",
-            "command": "bash -lc 'tail -n 80 hb1384_commonwealth_model.log'",
+            "command": "echo '(certify-book \"hb1384_challenger_model\" ? nil :defaxioms-okp t)' | docker run --rm -i -v \"${workspaceFolder}:/work\" -w /work atwalter/acl2:latest acl2",
+            "problemMatcher": []
+        },
+        {
+            "label": "acl2: certify commonwealth_model (Layer 3)",
+            "type": "shell",
+            "command": "echo '(certify-book \"hb1384_commonwealth_model\" ? nil :defaxioms-okp t)' | docker run --rm -i -v \"${workspaceFolder}:/work\" -w /work atwalter/acl2:latest acl2",
+            "problemMatcher": []
+        },
+        {
+            "label": "validate: run trace validator",
+            "type": "shell",
+            "command": "python tools\\validate_trace.py",
+            "problemMatcher": [],
+            "group": "test"
+        },
+        {
+            "label": "clean: remove build artifacts",
+            "type": "shell",
+            "command": "Remove-Item *.cert, *.fasl, *.port, *@expansion.lsp -ErrorAction SilentlyContinue",
             "problemMatcher": []
         }
     ]

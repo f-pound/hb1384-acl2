@@ -1,0 +1,74 @@
+{
+  "version": "1.0",
+  "project": "hb1384-acl2",
+  "description": "Provenance manifest for all authoritative sources cited in defaxiom entries",
+  "sources": [
+    {
+      "source_id": "va-const-art-xii-s1",
+      "title": "Constitution of Virginia, Article XII, Section 1",
+      "type": "constitutional_provision",
+      "url": "https://law.lis.virginia.gov/constitution/article12/section1/",
+      "description": "Amendment procedure — proposal, passage, intervening election, second passage, 90-day rule, submission to voters"
+    },
+    {
+      "source_id": "va-const-art-iv-s12",
+      "title": "Constitution of Virginia, Article IV, Section 12",
+      "type": "constitutional_provision",
+      "url": "https://law.lis.virginia.gov/constitution/article4/section12/",
+      "description": "Form of laws — single object rule: 'No law shall embrace more than one object, which shall be expressed in its title.'"
+    },
+    {
+      "source_id": "va-const-art-ii-s6",
+      "title": "Constitution of Virginia, Article II, Section 6",
+      "type": "constitutional_provision",
+      "url": "https://law.lis.virginia.gov/constitution/article2/section6/",
+      "description": "Apportionment — existing provisions proposed to be amended by HB 1384"
+    },
+    {
+      "source_id": "va-code-30-13",
+      "title": "Code of Virginia, § 30-13",
+      "type": "statute",
+      "url": "https://law.lis.virginia.gov/vacode/title30/chapter1/section30-13/",
+      "description": "Publication/posting requirement for proposed constitutional amendments (repealed by HB 1384)"
+    },
+    {
+      "source_id": "lis-hb1384",
+      "title": "Virginia Legislative Information System — HB 1384",
+      "type": "enrolled_act",
+      "url": "https://lis.virginia.gov/bill-details/20261/HB1384",
+      "description": "HB 1384 enrolled act text, session history, vote records, and bill tracking"
+    },
+    {
+      "source_id": "va-sc-order-2026",
+      "title": "Virginia Supreme Court Order (2026)",
+      "type": "judicial_order",
+      "description": "Supreme Court of Virginia order addressing the challenges to HB 1384 — identifies void ab initio finding, election sequencing, 90-day rule, publication, ballot language, and single object issues"
+    },
+    {
+      "source_id": "ballot-specimen-2026",
+      "title": "Virginia April 21, 2026 Ballot Specimen",
+      "type": "ballot_document",
+      "file": "virginia_april_21_ballot_1103976.pdf",
+      "description": "Ballot specimen showing the actual referendum question text presented to voters"
+    },
+    {
+      "source_id": "ballotpedia-hb1384",
+      "title": "Ballotpedia — Virginia Use of Legislative Congressional Redistricting Map Amendment (2026)",
+      "type": "reference",
+      "url": "https://ballotpedia.org/Virginia_Use_of_Legislative_Congressional_Redistricting_Map_Amendment_(2026)",
+      "description": "Encyclopedic summary of the amendment, including ballot language, arguments for and against, and procedural history"
+    },
+    {
+      "source_id": "va-boe-2025",
+      "title": "Virginia Board of Elections — 2025 General Election",
+      "type": "election_record",
+      "description": "Official election dates for the 2025 House of Delegates general election including early voting start date (September 19, 2025) and election day (November 4, 2025)"
+    },
+    {
+      "source_id": "va-doe-referendum-2026",
+      "title": "Virginia Department of Elections — April 2026 Referendum",
+      "type": "election_record",
+      "description": "Official referendum dates including early voting start (March 6, 2026) and referendum election day (April 21, 2026)"
+    }
+  ]
+}

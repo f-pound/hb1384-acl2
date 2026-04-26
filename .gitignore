@@ -1,8 +1,14 @@
-*.log
+# ACL2 build artifacts
 *.cert
 *.acl2x
 *.fasl
 *.lx64fsl
 *.dx64fsl
+*.port
 *.o
 *.out
+*.log
+*@expansion.lsp
+
+# Certification logs
+logs/

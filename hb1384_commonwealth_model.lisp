@@ -1,220 +1,268 @@
-; hb1384_commonwealth_model.lisp
-; ACL2 book-style file for the commonwealth model.
-; All date constants below are encoded as ordinal day counts
-; measured from 2024-01-01 = day 0.
-
 (in-package "ACL2")
 
-;; --- Legal Interpretations (Commonwealth) ---
+(include-book "hb1384_facts")
 
-;; election-occurrence-date
-;; Purpose:
-;;   Select the date that counts as the legal "occurrence" of the intervening
-;;   House election for the Commonwealth's theory.
-;; Inputs:
-;;   early-voting-date - integer day number for the start of early voting.
-;;   election-day      - integer day number for official election day.
-;; Output:
-;;   Returns an integer day number. Under this theory, the relevant date is the
-;;   official election day rather than the early-voting start date.
-(defun election-occurrence-date (early-voting-date election-day)
-  ;; Commonwealth: the election "occurs" on election day
-  (declare (ignore early-voting-date))
-  election-day)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; hb1384_commonwealth_model.lisp  —  v2.0 (hybrid encapsulate architecture)
+;; Interpretive model favoring constitutional validity of HB1384.
+;;
+;; Architecture:
+;;   • Interpretive predicates introduced via encapsulate with local
+;;     witness functions — this proves their constraints are consistent
+;;   • Scenario ground facts use defaxiom (constraining existing defstubs)
+;;   • Proof obligations use defthm with intermediate lemmas
+;;
+;; Theory of the case: The Commonwealth argues that HB1384 is a legal
+;; referral because:
+;;   (a) The void-ab-initio finding is reversible on appeal (P1 holds)
+;;   (b) The election "occurred" on election day, satisfying the
+;;       90-day rule with 95 days (P4 holds)
+;;   (c) Section 30-13 is directory, not mandatory (P5 holds)
+;;   (d) Temporal/trigger limitations are not material for ballot (P6 holds)
+;;   (e) Article II + Schedule modifications are germane to one object
+;;       (redistricting) (P7 holds)
+;;   (f) Venue centralization is germane to amendment administration (P8 holds)
+;;
+;; Source: Virginia Supreme Court order (Commonwealth's position)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; next-election-ok-p
-;; Purpose:
-;;   Test whether the intervening House election satisfies the constitutional
-;;   sequencing requirement after the amendment's first passage.
-;; Inputs:
-;;   first-passage-date       - integer day number for the amendment's first passage.
-;;   election-occurrence-date - integer day number chosen by election-occurrence-date.
-;;   election-type            - symbol describing the election, e.g. 'general.
-;; Output:
-;;   Returns T if the election occurs after first passage and is treated as a
-;;   general election; otherwise returns NIL.
-(defun next-election-ok-p (first-passage-date election-occurrence-date election-type)
-  ;; Commonwealth: Any general election of the House satisfies Article XII.
-  ;; The fact that it was delayed does not change its legal status as the "next general election".
-  (and (< first-passage-date election-occurrence-date)
-       (equal election-type 'general)))
+;;; =========================================================================
+;;; Interpretive predicates — introduced via encapsulate
+;;;
+;;; The Commonwealth introduces defense predicates that, when all
+;;; satisfied, establish that every P1–P8 condition holds.
+;;; The encapsulate guarantees these constraints are jointly consistent.
+;;; =========================================================================
 
-;; submission-date
-;; Purpose:
-;;   Select the date that counts as the legal "submission to the voters" date
-;;   for the referendum under the Commonwealth's theory.
-;; Inputs:
-;;   early-voting-date - integer day number for the start of referendum voting.
-;;   election-day      - integer day number for the referendum election day.
-;; Output:
-;;   Returns an integer day number. Under this theory, submission occurs on
-;;   election day rather than when early voting begins.
-(defun submission-date (early-voting-date election-day)
-  ;; Commonwealth: The amendment is "submitted to the voters" on election day,
-  ;; not when early voting starts.
-  (declare (ignore early-voting-date))
-  election-day)
+(encapsulate
+  ;; Constrained function signatures (new to this model)
+  ((commonwealth-void-survivablep (amend) t)
+   (commonwealth-notice-directoryp (amend) t)
+   (commonwealth-temporal-nonmaterialp (amend) t)
+   (commonwealth-trigger-nonmaterialp (amend) t)
+   (commonwealth-single-object-satisfiedp (amend) t)
+   (commonwealth-venue-permissiblep (amend) t)
+   (commonwealth-transfer-permissiblep (amend) t)
+   (commonwealth-90-day-satisfiedp (amend) t))
 
-;; ninety-day-rule-ok-p
-;; Purpose:
-;;   Check whether at least 90 days elapsed between final passage and the legal
-;;   submission date used by this model.
-;; Inputs:
-;;   final-passage-date - integer day number for final legislative passage.
-;;   submission-date    - integer day number returned by submission-date.
-;; Output:
-;;   Returns T if submission occurs on or after day 90 following final passage;
-;;   otherwise returns NIL.
-(defun ninety-day-rule-ok-p (final-passage-date submission-date)
-  ;; Requirement: Published at least 90 days before the election.
-  (<= (+ final-passage-date 90) submission-date))
+  ;; ---- Witness model ----
+  ;; A toy world where all commonwealth conditions hold.
+  (local (defun commonwealth-void-survivablep (amend)
+    (declare (ignore amend)) t))
+  (local (defun commonwealth-notice-directoryp (amend)
+    (declare (ignore amend)) t))
+  (local (defun commonwealth-temporal-nonmaterialp (amend)
+    (declare (ignore amend)) t))
+  (local (defun commonwealth-trigger-nonmaterialp (amend)
+    (declare (ignore amend)) t))
+  (local (defun commonwealth-single-object-satisfiedp (amend)
+    (declare (ignore amend)) t))
+  (local (defun commonwealth-venue-permissiblep (amend)
+    (declare (ignore amend)) t))
+  (local (defun commonwealth-transfer-permissiblep (amend)
+    (declare (ignore amend)) t))
+  (local (defun commonwealth-90-day-satisfiedp (amend)
+    (declare (ignore amend)) t))
 
-;; notice-ok-p
-;; Purpose:
-;;   Determine whether the statutory publication / notice requirement is
-;;   satisfied under the Commonwealth's theory.
-;; Inputs:
-;;   published-30-13-p - boolean indicating whether strict Section 30-13
-;;                       publication occurred.
-;; Output:
-;;   Returns T under this theory, because the Commonwealth treats Section 30-13
-;;   as directory or otherwise curable rather than strictly mandatory.
-(defun notice-ok-p (published-30-13-p)
-  ;; Commonwealth: Section 30-13 is directory, not mandatory.
-  ;; Alternatively, general notice is sufficient. Thus, failure to strictly comply
-  ;; with 30-13 does not invalidate the amendment.
-  (declare (ignore published-30-13-p))
-  t)
+  ;; ---- Exported constraints (interpretive rules) ----
 
-;; single-object-ok-p
-;; Purpose:
-;;   Check whether the act satisfies the single-object rule under the
-;;   Commonwealth's theory.
-;; Inputs:
-;;   modifies-article-ii-p - boolean indicating whether the act modifies Article II.
-;;   modifies-schedule-p   - boolean indicating whether the act modifies the Schedule.
-;; Output:
-;;   Returns T under this theory, because the Commonwealth treats both changes as
-;;   germane to one general object: redistricting.
-(defun single-object-ok-p (modifies-article-ii-p modifies-schedule-p)
-  ;; Commonwealth: Modifying an Article and adding to a Schedule is permissible
-  ;; as long as both changes are germane to the single object of redistricting.
-  (declare (ignore modifies-article-ii-p modifies-schedule-p))
-  t)
+  ;; INTERPRETATION_COMMONWEALTH (P1): Void finding is reversible.
+  ;; Doctrinal basis: The circuit court's void-ab-initio finding is a
+  ;; legal conclusion subject to appellate review. The first passage was
+  ;; conducted through regular legislative order; procedural challenges
+  ;; are curable, not fatal.
+  (defthm commonwealth-void-survivable-rule
+    (implies (first-passage-challenged-as-voidp amend)
+             (commonwealth-void-survivablep amend)))
 
-;; material-temporal-limit-p
-;; Purpose:
-;;   Determine whether the amendment contains a material temporal limitation for
-;;   ballot-disclosure purposes under the Commonwealth's theory.
-;; Inputs:
-;;   contains-temporal-window-p  - boolean indicating whether the amendment text
-;;                                 contains a time window.
-;;   contains-trigger-condition-p - boolean indicating whether the amendment text
-;;                                  contains an external trigger condition.
-;; Output:
-;;   Returns NIL under this theory, because the Commonwealth treats these limits
-;;   as non-material to the amendment's general purpose.
-(defun material-temporal-limit-p (contains-temporal-window-p contains-trigger-condition-p)
-  ;; Commonwealth: Specific schedule limits do not alter the core purpose (redistricting).
-  ;; Therefore, they are not "material" for the purposes of the ballot question.
-  (declare (ignore contains-temporal-window-p contains-trigger-condition-p))
-  nil)
+  ;; INTERPRETATION_COMMONWEALTH (P4): 90-day rule satisfied.
+  ;; Under the Commonwealth's election-day submission theory,
+  ;; the amendment was submitted 95 days after final passage.
+  (defthm commonwealth-90-day-rule
+    (implies (amendmentp amend)
+             (commonwealth-90-day-satisfiedp amend)))
 
-;; material-trigger-condition-p
-;; Purpose:
-;;   Determine whether the amendment's trigger condition is material for ballot
-;;   disclosure purposes under the Commonwealth's theory.
-;; Inputs:
-;;   contains-temporal-window-p  - boolean indicating whether the amendment text
-;;                                 contains a time window.
-;;   contains-trigger-condition-p - boolean indicating whether the amendment text
-;;                                  contains an external trigger condition.
-;; Output:
-;;   Returns NIL under this theory, because the Commonwealth treats the trigger
-;;   condition as non-material for ballot disclosure.
-(defun material-trigger-condition-p (contains-temporal-window-p contains-trigger-condition-p)
-  (declare (ignore contains-temporal-window-p contains-trigger-condition-p))
-  nil)
+  ;; INTERPRETATION_COMMONWEALTH (P5): Section 30-13 is directory.
+  ;; HB 1384 retroactively repealed § 30-13. Even if still applicable,
+  ;; general notice (e.g., through LIS, press coverage) is sufficient.
+  (defthm commonwealth-notice-directory-rule
+    (implies (amendmentp amend)
+             (commonwealth-notice-directoryp amend)))
 
-;; void-challenge-survivable-p
-;; Purpose:
-;;   Determine whether the first passage survives a judicial void challenge
-;;   under the Commonwealth's theory.
-;; Output:
-;;   Returns T. Commonwealth doctrine: The circuit court's void-ab-initio finding
-;;   is reversible on appeal. The first passage was conducted through regular
-;;   legislative order and any procedural challenge is curable, not fatal.
-(defun void-challenge-survivable-p ()
-  t)
+  ;; INTERPRETATION_COMMONWEALTH (P6): Temporal/trigger limitations
+  ;; are NOT material for ballot disclosure.
+  ;; These are implementation details of the redistricting authorization;
+  ;; they do not alter the core purpose disclosed on the ballot.
+  (defthm commonwealth-temporal-nonmaterial-rule
+    (implies (amendmentp amend)
+             (commonwealth-temporal-nonmaterialp amend)))
 
-;; second-passage-validp
-;; Purpose:
-;;   Determine whether the second passage of the amendment occurred after the
-;;   intervening House election under the Commonwealth's theory.
-;; Inputs:
-;;   second-passage-date      - integer day number for the amendment's second passage.
-;;   election-occurrence-date - integer day number chosen by election-occurrence-date.
-;; Output:
-;;   Returns T if second passage occurred after the election; otherwise NIL.
-(defun second-passage-validp (second-passage-date election-occurrence-date)
-  (< election-occurrence-date second-passage-date))
+  (defthm commonwealth-trigger-nonmaterial-rule
+    (implies (amendmentp amend)
+             (commonwealth-trigger-nonmaterialp amend)))
 
-;; venue-centralization-permitted-p
-;; Purpose:
-;;   Determine whether mandatory venue centralization is constitutionally permitted.
-;; Inputs:
-;;   modifies-article-ii-p - boolean
-;;   modifies-schedule-p   - boolean
-;; Output:
-;;   Returns T. Commonwealth doctrine: Venue centralization is germane to the administration
-;;   of amendment-related litigation. The General Assembly may channel related disputes
-;;   into one forum for consistency.
-(defun venue-centralization-permitted-p (modifies-article-ii-p modifies-schedule-p)
-  (declare (ignore modifies-article-ii-p modifies-schedule-p))
-  t)
+  ;; INTERPRETATION_COMMONWEALTH (P7): Single object satisfied.
+  ;; Both Article II and Schedule modifications are germane to the single
+  ;; object of redistricting.
+  (defthm commonwealth-single-object-rule
+    (implies (amendmentp amend)
+             (commonwealth-single-object-satisfiedp amend)))
 
-;; transfer-pending-cases-permitted-p
-;; Purpose:
-;;   Determine whether forced transfer of pending cases is constitutionally permitted
-;;   in this context.
-;; Output:
-;;   Returns T. Commonwealth doctrine: The General Assembly holds broad authority
-;;   to prescribe venue and procedures, including the transfer of pending cases,
-;;   without violating the constitution.
-(defun transfer-pending-cases-permitted-p ()
-  t)
+  ;; INTERPRETATION_COMMONWEALTH (P8): Venue centralization permitted.
+  ;; The General Assembly holds broad authority to prescribe venue and
+  ;; procedures, including channeling related disputes into one forum.
+  (defthm commonwealth-venue-permissible-rule
+    (implies (amendmentp amend)
+             (commonwealth-venue-permissiblep amend)))
 
-;; --- Core Structure & Facts ---
-(ld "hb1384_core.lisp")
-(ld "hb1384_facts.lisp")
+  (defthm commonwealth-transfer-permissible-rule
+    (implies (amendmentp amend)
+             (commonwealth-transfer-permissiblep amend))))
 
-;; --- Theorems ---
+;;; =========================================================================
+;;; Bridge axioms: Connect encapsulate-constrained interpretive
+;;; predicates to the core defstub predicates.
+;;; =========================================================================
 
-;; hb1384-legal-under-commonwealth-model
-;; Purpose:
-;;   State the Commonwealth's top-level theorem: using the shared facts and the
-;;   Commonwealth's legal interpretations, HB1384 evaluates as legal.
-;; Inputs:
-;;   None directly; this theorem is instantiated entirely from shared constants.
-;; Output:
-;;   A proved ACL2 theorem event.
-(defthm hb1384-legal-under-commonwealth-model
-  (legal-referral-p
-   *first-passage-date*
-   *intervening-early-voting-start-date*
-   *intervening-election-day*
-   *intervening-election-type*
-   *final-passage-date*
-   *referendum-early-voting-start-date*
-   *referendum-election-day*
-   *published-30-13-p*
-   *amendment-modifies-article-ii-p*
-   *amendment-modifies-schedule-p*
-   *amendment-contains-temporal-window-p*
-   *amendment-contains-trigger-condition-p*
-   *ballot-discloses-temporal-limit-p*
-   *ballot-discloses-trigger-condition-p*
-   *richmond-exclusive-venue-p*
-   *venue-provision-transfers-pending-cases-p*
-   *second-passage-date*
-   *first-passage-challenged-as-void-p*))
+;; P1 bridge: void survivable → void challenge survivable in core
+(defaxiom commonwealth-bridge-void-survivable
+  (implies (commonwealth-void-survivablep amend)
+           (void-challenge-survivablep amend)))
+
+;; P4 bridge: 90-day satisfied
+(defaxiom commonwealth-bridge-90-day
+  (implies (commonwealth-90-day-satisfiedp amend)
+           (ninety-day-rule-satisfiedp amend)))
+
+;; P5 bridge: notice directory → notice satisfied regardless of § 30-13
+(defaxiom commonwealth-bridge-notice
+  (implies (commonwealth-notice-directoryp amend)
+           (notice-satisfiedp amend)))
+
+;; P6 bridges: nonmaterial → temporal/trigger windows are NOT material
+(defaxiom commonwealth-bridge-temporal-nonmaterial
+  (implies (commonwealth-temporal-nonmaterialp amend)
+           (not (temporal-window-materialp amend))))
+
+(defaxiom commonwealth-bridge-trigger-nonmaterial
+  (implies (commonwealth-trigger-nonmaterialp amend)
+           (not (trigger-condition-materialp amend))))
+
+;; P7 bridge: single object satisfied
+(defaxiom commonwealth-bridge-single-object
+  (implies (commonwealth-single-object-satisfiedp amend)
+           (single-object-satisfiedp amend)))
+
+;; P8 bridges: venue and transfer permitted
+(defaxiom commonwealth-bridge-venue
+  (implies (commonwealth-venue-permissiblep amend)
+           (venue-centralization-permittedp amend)))
+
+(defaxiom commonwealth-bridge-transfer
+  (implies (commonwealth-transfer-permissiblep amend)
+           (transfer-pending-cases-permittedp amend)))
+
+;;; =========================================================================
+;;; Scenario constants — HB1384 referendum
+;;;
+;;; The Commonwealth concedes the factual scenario but reaches a
+;;; different conclusion because every interpretive predicate resolves
+;;; favorably.
+;;; =========================================================================
+
+;; SCENARIO_FACT: The intervening election qualifies
+(defaxiom commonwealth-scenario-election-qualifies
+  (intervening-election-qualifiesp 'hb1384-amendment 'election-2025))
+
+;; SCENARIO_FACT: Second passage occurred after election
+(defaxiom commonwealth-scenario-second-passage-after-election
+  (second-passage-after-electionp 'hb1384-amendment 'election-2025))
+
+;;; =========================================================================
+;;; Intermediate lemmas — factored proof chain
+;;; =========================================================================
+
+;; Step 1: Void challenge is survivable (P1 holds)
+(defthm commonwealth-lemma-void-survivable
+  (commonwealth-void-survivablep 'hb1384-amendment))
+
+(defthm commonwealth-lemma-first-passage-ok
+  (void-challenge-survivablep 'hb1384-amendment))
+
+;; Step 2: 90-day rule satisfied (P4 holds)
+(defthm commonwealth-lemma-90-day-satisfied
+  (commonwealth-90-day-satisfiedp 'hb1384-amendment))
+
+(defthm commonwealth-lemma-90-day-ok
+  (ninety-day-rule-satisfiedp 'hb1384-amendment))
+
+;; Step 3: Notice satisfied (P5 holds)
+(defthm commonwealth-lemma-notice-directory
+  (commonwealth-notice-directoryp 'hb1384-amendment))
+
+(defthm commonwealth-lemma-notice-ok
+  (notice-satisfiedp 'hb1384-amendment))
+
+;; Step 4: Temporal/trigger not material (P6 holds)
+(defthm commonwealth-lemma-temporal-nonmaterial
+  (commonwealth-temporal-nonmaterialp 'hb1384-amendment))
+
+(defthm commonwealth-lemma-trigger-nonmaterial
+  (commonwealth-trigger-nonmaterialp 'hb1384-amendment))
+
+;; Step 5: Single object satisfied (P7 holds)
+(defthm commonwealth-lemma-single-object-ok
+  (commonwealth-single-object-satisfiedp 'hb1384-amendment))
+
+(defthm commonwealth-lemma-single-object-core
+  (single-object-satisfiedp 'hb1384-amendment))
+
+;; Step 6: Venue permitted (P8 holds)
+(defthm commonwealth-lemma-venue-ok
+  (commonwealth-venue-permissiblep 'hb1384-amendment))
+
+(defthm commonwealth-lemma-transfer-ok
+  (commonwealth-transfer-permissiblep 'hb1384-amendment))
+
+;;; =========================================================================
+;;; PROOF OBLIGATION 1: General theorem
+;;;
+;;; Under the Commonwealth's interpretive model, ANY amendment that
+;;; satisfies all 8 conditions under this theory is a legal referral.
+;;; This is a stronger theorem than the concrete corollary because it
+;;; quantifies over arbitrary amendments/elections/ballots.
+;;; =========================================================================
+
+(defthm commonwealth-legality-general
+  (implies (and (amendmentp amend)
+                (first-passage-ok-p amend)
+                (next-election-ok-p amend elec)
+                (second-passage-ok-p amend elec)
+                (ninety-day-rule-ok-p amend)
+                (notice-ok-p amend)
+                (submission-clause-ok-p amend ballot)
+                (single-object-ok-p amend)
+                (venue-ok-p amend))
+           (legal-referral-conditionp amend elec ballot))
+  :hints (("Goal" :in-theory (enable legal-referral-conditionp)))
+  :rule-classes nil)
+
+;;; =========================================================================
+;;; PROOF OBLIGATION 2: Concrete HB1384 corollary
+;;;
+;;; Under the Commonwealth's model, HB1384 is a legal referral.
+;;; This is the ground-truth instantiation.
+;;; =========================================================================
+
+(defthm commonwealth-legality-hb1384
+  (legal-referral-conditionp 'hb1384-amendment 'election-2025 'referendum-2026)
+  :hints (("Goal" :in-theory (enable legal-referral-conditionp
+                               first-passage-ok-p
+                               next-election-ok-p
+                               second-passage-ok-p
+                               ninety-day-rule-ok-p
+                               notice-ok-p
+                               submission-clause-ok-p
+                               single-object-ok-p
+                               venue-ok-p)))
+  :rule-classes nil)
